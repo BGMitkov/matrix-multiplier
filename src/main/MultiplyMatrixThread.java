@@ -6,8 +6,6 @@ public class MultiplyMatrixThread extends Thread {
 	
 	private int startingRow;
     private int numberOfRows;
-    private int m;
-    private int n;
     private int k;	
     private boolean q;
     private double [][] A;
@@ -15,12 +13,10 @@ public class MultiplyMatrixThread extends Thread {
     private double [][] C;
     private long t1,t2;
 	
-    public MultiplyMatrixThread(int startingRow, int numberOfRows, int m, int n, int k
+    public MultiplyMatrixThread(int startingRow, int numberOfRows, int n, int k
     		, double[][] a, double[][] tb, double[][] c, boolean q) {
 		this.startingRow = startingRow;
 		this.numberOfRows = numberOfRows;
-		this.m = m;
-		this.n = n;
 		this.k = k;
 		this.q = q;
 		A = a;

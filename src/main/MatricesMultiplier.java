@@ -4,7 +4,6 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.util.Calendar;
-import java.util.Iterator;
 import java.util.Scanner;
 
 import org.apache.commons.cli.*;
@@ -100,39 +99,6 @@ public class MatricesMultiplier implements MatricesMultiplierInterface {
 
 	}
 
-	/*
-	 * @Override public void MatricesGenerator(int m, int n, int k, int
-	 * numberOfThreads, int numberRange, boolean q) {
-	 * 
-	 * A = new double[m][n]; B = new double[n][k];
-	 * 
-	 * MatrixGenerator(m, n, A, numberOfThreads, numberRange, q);
-	 * MatrixGenerator(n, k, B, numberOfThreads, numberRange, q);
-	 * 
-	 * multiplyMatrix(m, n, k, numberOfThreads, q); }
-	 */
-
-	/*
-	 * @Override public void MatrixGenerator(int m, int n, double[][] a, int
-	 * numberOfThreads, int numberRange, boolean q) { int numberOfRows = m /
-	 * numberOfThreads; int leftOver = m % numberOfThreads;
-	 * MatrixGeneratingThread[] threads = new
-	 * MatrixGeneratingThread[numberOfThreads]; if (numberOfThreads > 1) { for
-	 * (int i = 0; i < numberOfThreads - 1; i++) { threads[i] = new
-	 * MatrixGeneratingThread(i * numberOfRows, a, numberOfRows, n, numberRange,
-	 * q); threads[i].start(); }
-	 * 
-	 * threads[numberOfThreads - 1] = new MatrixGeneratingThread(
-	 * (numberOfThreads - 1) * numberOfRows, a, numberOfRows + leftOver, n,
-	 * numberRange, q); threads[numberOfThreads - 1].start(); } else {
-	 * threads[0] = new MatrixGeneratingThread(0, a, numberOfRows, n,
-	 * numberRange, q); threads[0].start(); }
-	 * 
-	 * for (int i = 0; i < threads.length; i++) { try { threads[i].join(); }
-	 * catch (Exception e) { e.printStackTrace(); } } if (!q) {
-	 * System.out.println("DONE creating matrix"); } }
-	 */
-
 	/**
 	 * A method for transposing the right B matrix
 	 * 
@@ -168,16 +134,16 @@ public class MatricesMultiplier implements MatricesMultiplierInterface {
 		if (numberOfThreads > 1) {
 			for (int j = 0; j < numberOfThreads - 1; j++) {
 				mthreads[j] = new MultiplyMatrixThread(j * numberOfRows,
-						numberOfRows, m, n, k, A, tB, C, q);
+						numberOfRows, n, k, A, tB, C, q);
 				mthreads[j].start();
 			}
 
 			mthreads[numberOfThreads - 1] = new MultiplyMatrixThread(
 					(numberOfThreads - 1) * numberOfRows, numberOfRows
-							+ leftOver, m, n, k, A, tB, C, q);
+							+ leftOver, n, k, A, tB, C, q);
 			mthreads[numberOfThreads - 1].start();
 		} else {
-			mthreads[0] = new MultiplyMatrixThread(0, numberOfRows, m, n, k, A,
+			mthreads[0] = new MultiplyMatrixThread(0, numberOfRows, n, k, A,
 					tB, C, q);
 			mthreads[0].start();
 		}
@@ -208,44 +174,6 @@ public class MatricesMultiplier implements MatricesMultiplierInterface {
 		}
 	}
 
-	/*
-	 * @Override public void MatrixGeneratorWithMathRandom(int m, int n,
-	 * double[][] a, int numberOfThreads, int numberRange, boolean q) { int
-	 * numberOfRows = m / numberOfThreads; int leftOver = m % numberOfThreads;
-	 * MatrixGeneratingThreadWithMathRandom[] threads = new
-	 * MatrixGeneratingThreadWithMathRandom[numberOfThreads]; for (int i = 0; i
-	 * < numberOfThreads - 1; i++) { threads[i] = new
-	 * MatrixGeneratingThreadWithMathRandom(i numberOfRows, a, numberOfRows, n,
-	 * numberRange, q); System.out.println("rowspre: " + i * numberOfRows);
-	 * threads[i].start(); }
-	 * 
-	 * if (numberOfThreads > 1) { threads[numberOfThreads - 1] = new
-	 * MatrixGeneratingThreadWithMathRandom( (numberOfThreads - 1) *
-	 * numberOfRows, a, numberOfRows + leftOver, n, numberRange, q);
-	 * System.out.println("rowspre: " + (numberOfThreads - 1) numberOfRows);
-	 * threads[numberOfThreads - 1].start(); }
-	 * 
-	 * for (int i = 0; i < threads.length; i++) { try { threads[i].join(); }
-	 * catch (Exception e) { e.printStackTrace(); } }
-	 * System.out.println("DONE creating matrix");
-	 * 
-	 * }
-	 */
-
-	/*
-	 * @Override public void MatricesGeneratorWithMathRandom(int m, int n, int
-	 * k, int numberOfThreads, int numberRange, boolean q) { A = new
-	 * double[m][n]; B = new double[n][k]; MatrixGeneratorWithMathRandom(m, n,
-	 * A, numberOfThreads, numberRange, q); MatrixGeneratorWithMathRandom(n, k,
-	 * B, numberOfThreads, numberRange, q); tB = new double[k][n]; transpose(n,
-	 * k); C = new double[m][k]; multiplyMatrix(m, n, k, 4, q); }
-	 */
-
-	/*
-	 * @Override public double[] toDoubleArray(String line) { // TODO
-	 * Auto-generated method stub return null; }
-	 */
-
 	@Override
 	public void importMatrices(String fileName, int numberOfThreads, boolean q) {
 
@@ -263,8 +191,6 @@ public class MatricesMultiplier implements MatricesMultiplierInterface {
 			A = new double[m][n];
 			B = new double[n][k];
 			scan.nextLine();
-			String line;
-
 			importMatrix(A, m, n, scan);
 			importMatrix(B, n, k, scan);
 

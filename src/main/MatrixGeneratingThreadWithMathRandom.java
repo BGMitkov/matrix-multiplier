@@ -2,6 +2,12 @@ package main;
 
 import java.util.Calendar;
 
+/**
+ * This uses the Math.random() to generating a random number, but is slower than
+ * the ThreadLocalRandom
+ * 
+ * @author bgmitkov
+ */
 public class MatrixGeneratingThreadWithMathRandom extends Thread {
 
 	private boolean quiet;
